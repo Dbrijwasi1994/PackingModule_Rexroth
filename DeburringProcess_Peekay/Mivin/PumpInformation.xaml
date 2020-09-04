@@ -25,7 +25,7 @@
             <StackPanel x:Name="panelFilterHeader" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Stretch">
                 <Image Source="/Images/Assets/appbar.input.pen.down.png"/>
                 <TextBlock Text="Pump Part Number : " Style="{StaticResource HeaderTextblockStyle}"/>
-                <TextBox Name="txtPumpPartNumber" Style="{StaticResource MyWaterMarkStyle}" Width="210" Margin="10,0,0,0" Height="28" Tag="Enter Pump Part Number" FontSize="16" FontWeight="Bold"/>
+                <TextBox Name="txtPumpPartNumber" Style="{StaticResource MyWaterMarkStyle}" Width="210" Margin="10,0,0,0" Height="28" Tag="Enter Pump Part Number" FontSize="16" FontWeight="Bold" KeyDown="txtPumpPartNumber_KeyDown"/>
                 <Button x:Name="btnSearch" Margin="10,0,0,0" Height="26" ToolTip="Search" Focusable="False" Style="{x:Null}" Click="btnSearch_Click">
                     <Button.Content>
                         <Image Source="/Images/Assets/Search.jpg"/>

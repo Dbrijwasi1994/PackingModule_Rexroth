@@ -225,7 +225,7 @@ namespace PackingModule_Rexroth.Mivin
                                 ExcelPackage Excelpck = new ExcelPackage(fileinfo);
                                 ExcelWorksheet worksheet = Excelpck.Workbook.Worksheets[21];
                                 DataTable dt = new DataTable();
-                                string Monthyear = worksheet.Cells["E3"].Text.ToString();
+                                string Monthyear = worksheet.Cells["C3"].Text.ToString();
                                 DateTime MonthYear = DateTime.Now;
                                 DateTime.TryParseExact(Monthyear, "MMM-yy", CultureInfo.InvariantCulture, DateTimeStyles.None, out MonthYear);
                                 DateTime Dateforimport = MonthYear;
@@ -233,7 +233,7 @@ namespace PackingModule_Rexroth.Mivin
                                 {
                                     if (worksheet.Cells[i, 1].Value != null && !(string.IsNullOrEmpty(worksheet.Cells[i, 1].Value.ToString()) || worksheet.Cells[i, 1].Value.ToString().Equals("Total", StringComparison.OrdinalIgnoreCase)))
                                     {
-                                        for (int j = 12; j <= worksheet.Dimension.End.Column; j++)
+                                        for (int j = 10; j <= worksheet.Dimension.End.Column; j++)
                                         {
                                             MonthlyScheduleMasterEntity ImportEntity = new MonthlyScheduleMasterEntity();
                                             if (worksheet.Cells[i, 1].Value != null)
@@ -246,40 +246,34 @@ namespace PackingModule_Rexroth.Mivin
                                             }
                                             if (worksheet.Cells[i, 3].Value != null)
                                             {
-                                                ImportEntity.WorkOrderNumber = worksheet.Cells[i, 3].Value.ToString();
+                                                ImportEntity.PumpPartNumber = worksheet.Cells[i, 3].Value.ToString().Replace(" ", "");
                                             }
                                             if (worksheet.Cells[i, 4].Value != null)
                                             {
-                                                ImportEntity.CustomerModel = worksheet.Cells[i, 4].Value.ToString();
+                                                ImportEntity.MonthSchedule = Convert.ToInt32(worksheet.Cells[i, 4].Value.ToString());
                                             }
                                             if (worksheet.Cells[i, 5].Value != null)
                                             {
-                                                ImportEntity.PumpPartNumber = worksheet.Cells[i, 5].Value.ToString().Replace(" ", "");
+                                                ImportEntity.ScheduleWeek1 = Convert.ToInt32(worksheet.Cells[i, 5].Value.ToString());
                                             }
                                             if (worksheet.Cells[i, 6].Value != null)
                                             {
-                                                ImportEntity.MonthSchedule = Convert.ToInt32(worksheet.Cells[i, 6].Value.ToString());
+                                                ImportEntity.ScheduleWeek2 = Convert.ToInt32(worksheet.Cells[i, 6].Value.ToString());
                                             }
                                             if (worksheet.Cells[i, 7].Value != null)
                                             {
-                                                ImportEntity.ScheduleWeek1 = Convert.ToInt32(worksheet.Cells[i, 7].Value.ToString());
+                                                ImportEntity.ScheduleWeek3 = Convert.ToInt32(worksheet.Cells[i, 7].Value.ToString());
                                             }
                                             if (worksheet.Cells[i, 8].Value != null)
                                             {
-                                                ImportEntity.ScheduleWeek2 = Convert.ToInt32(worksheet.Cells[i, 8].Value.ToString());
+                                                ImportEntity.ScheduleWeek4 = Convert.ToInt32(worksheet.Cells[i, 8].Value.ToString());
                                             }
                                             if (worksheet.Cells[i, 9].Value != null)
                                             {
-                                                ImportEntity.ScheduleWeek3 = Convert.ToInt32(worksheet.Cells[i, 9].Value.ToString());
+                                                ImportEntity.ScheduleWeek5 = Convert.ToInt32(worksheet.Cells[i, 9].Value.ToString());
                                             }
-                                            if (worksheet.Cells[i, 10].Value != null)
-                                            {
-                                                ImportEntity.ScheduleWeek4 = Convert.ToInt32(worksheet.Cells[i, 10].Value.ToString());
-                                            }
-                                            if (worksheet.Cells[i, 11].Value != null)
-                                            {
-                                                ImportEntity.ScheduleWeek5 = Convert.ToInt32(worksheet.Cells[i, 11].Value.ToString());
-                                            }
+                                            ImportEntity.WorkOrderNumber = "";
+                                            ImportEntity.CustomerModel = "";
                                             ImportEntity.Date = MonthYear;
                                             MonthYear = MonthYear.AddDays(1);
                                             if (worksheet.Cells[i, j].Value != null && !string.IsNullOrEmpty(worksheet.Cells[i, j].Value.ToString()))
@@ -293,6 +287,27 @@ namespace PackingModule_Rexroth.Mivin
                                 }
                                 if (ScheduleMasterImportData != null && ScheduleMasterImportData.Count > 0)
                                 {
+                                    if (ScheduleMasterImportData.Any(x => string.IsNullOrEmpty(x.PackagingType)))
+                                    {
+                                        DialogBox dlgError = new DialogBox("Error!!", "One or more Packing type in the file is empty. Please enter type and import again.", true);
+                                        dlgError.Owner = Window.GetWindow(this);
+                                        dlgError.ShowDialog();
+                                        return;
+                                    }
+                                    if (ScheduleMasterImportData.Any(x => !PackagingTypeList.Contains(x.PackagingType)))
+                                    {
+                                        DialogBox dlgError = new DialogBox("Error!!", "One or more Packing type does not match with the allowed types in the table.", true);
+                                        dlgError.Owner = Window.GetWindow(this);
+                                        dlgError.ShowDialog();
+                                        return;
+                                    }
+                                    if (ScheduleMasterImportData.Any(x => string.IsNullOrEmpty(x.PumpPartNumber)))
+                                    {
+                                        DialogBox dlgError = new DialogBox("Error!!", "One or more Part no. in the file is empty. Please enter the data and import again.", true);
+                                        dlgError.Owner = Window.GetWindow(this);
+                                        dlgError.ShowDialog();
+                                        return;
+                                    }
                                     foreach (MonthlyScheduleMasterEntity Entity in ScheduleMasterImportData)
                                     {
                                         if ((Entity.PumpPartNumber.Contains("(") && Entity.PumpPartNumber.Contains(")")))
@@ -338,7 +353,6 @@ namespace PackingModule_Rexroth.Mivin
                 {
                     MessageBox.Show(ex.Message, "Error!!", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-
             }
         }
 

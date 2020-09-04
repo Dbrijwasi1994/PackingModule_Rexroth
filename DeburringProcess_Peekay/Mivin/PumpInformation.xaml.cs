@@ -412,6 +412,14 @@ namespace DeburringProcess_Peekay.Mivin
             }
         }
 
+        private void txtPumpPartNumber_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                btnSearch_Click(null, null);
+            }
+        }
+
         private void PumpInfoGrid_GotFocus(object sender, RoutedEventArgs e)
         {
             if (e.OriginalSource.GetType() == typeof(DataGridCell))

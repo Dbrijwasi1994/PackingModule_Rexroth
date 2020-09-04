@@ -54,5 +54,13 @@ namespace DeburringProcess_Peekay.Dialogs
         {
             this.Close();
         }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key.Equals(Key.Enter))
+            {
+                this.Close();
+            }
+        }
     }
 }

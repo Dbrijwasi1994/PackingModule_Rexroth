@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DeburringProcess_Peekay.Dialogs"
         mc:Ignorable="d"
-        Title="DialogBox" Height="200" Width="400" WindowStyle="None" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        Title="DialogBox" Height="200" Width="400" WindowStyle="None" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" KeyDown="Window_KeyDown">
 
     <Grid  x:Name="gridContainer" Background="AliceBlue" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <Grid.RowDefinitions>
