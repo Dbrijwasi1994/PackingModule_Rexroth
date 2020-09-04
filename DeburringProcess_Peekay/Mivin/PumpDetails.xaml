@@ -1,0 +1,26 @@
+﻿<Window x:Class="DeburringProcess_Peekay.Mivin.PumpDetails"
+        x:Name="EnterPumpDetails"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DeburringProcess_Peekay.Mivin"
+        mc:Ignorable="d" Title="Enter Pump Details"
+        Height="200" Width="250" WindowStartupLocation="CenterScreen" WindowStyle="ThreeDBorderWindow" WindowState="Normal" ResizeMode="NoResize" Loaded="EnterPumpDetails_Loaded" Background="Azure">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="10"/>
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Content="Enter Pump Model Number : " FontWeight="SemiBold" FontSize="14" FontFamily="Segoe UI"/>
+        <TextBox Grid.Row="1" x:Name="txtPumpModel" FontWeight="SemiBold" FontSize="16" FontFamily="Segoe UI" Height="30" Width="180"/>
+        <Label Grid.Row="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Content="Enter Pump Serial Number : " FontWeight="SemiBold" FontSize="14" FontFamily="Segoe UI"/>
+        <TextBox Grid.Row="3" x:Name="txtPumpSlNo" FontWeight="SemiBold" FontSize="16" FontFamily="Segoe UI" Height="30" Width="180"/>
+        <Button Grid.Row="5" Width="180" Content="Submit to dashboard" FontWeight="SemiBold" FontSize="14" FontFamily="Segoe UI" Click="Button_Click"/>
+    </Grid>
+</Window>

@@ -1,0 +1,134 @@
+﻿<Window x:Class="DeburringProcess_Peekay.LoginPage"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Login" WindowStartupLocation="CenterScreen" WindowState="Maximized" WindowStyle="None" BorderThickness="0" ShowInTaskbar="True" Loaded="Window_Loaded">
+    <Window.Resources>
+        <ResourceDictionary Source="Resources\DeburringProcessResources.xaml"/>
+
+    </Window.Resources>
+    <Border CornerRadius="2" BorderBrush="Black" 
+                BorderThickness="5" >
+        <Grid >
+            <Canvas >
+                <Canvas.Background>
+                    <ImageBrush  Stretch="UniformToFill" ImageSource="Images\Rexroth_Login_bg.jpg" Opacity="0.8" />
+                </Canvas.Background>
+            </Canvas>
+            <Border x:Name="brdrMain">
+                <Border.Style>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="2" />
+                        <Setter Property="Margin" Value="-1" />
+                        <Setter Property="Padding" Value="5" />
+                        <Setter Property="BorderThickness" Value="4" />
+                    </Style>
+                </Border.Style>
+                <!--<Border.Effect>
+                <BlurEffect KernelType="Gaussian" Radius="2" RenderingBias="Performance"></BlurEffect>
+            </Border.Effect>-->
+                <Border.Effect>
+                    <DropShadowEffect ShadowDepth="1"
+                                  Color="LightBlue"
+                                  BlurRadius="5"></DropShadowEffect>
+                </Border.Effect>
+
+                <Grid Margin="20" Height="230" Width="410" HorizontalAlignment="Center" VerticalAlignment="Center" >
+                    <Border BorderThickness="1"  BorderBrush="Black" >
+                        <Border.Effect>
+                            <DropShadowEffect Opacity="0.1"/>
+                        </Border.Effect>
+                        <Grid >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"></RowDefinition>
+                                <RowDefinition Height="30"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                                <RowDefinition Height="27"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Border BorderThickness="0,0,0,0.5"  BorderBrush="Gray">
+                                <Grid >
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="125"></ColumnDefinition>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                        <ColumnDefinition Width="60"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <Image Grid.Column="0" Margin="1,1,0,1" Stretch="UniformToFill" Source="Images\CompanyLogo\RexrothLogo_New.png" HorizontalAlignment="left"  VerticalAlignment="Center" />
+                                    <Label Grid.Column="1" FontSize="18" FontWeight="Black"  Content="Packing Solutions"  Grid.Row="0" TextBlock.TextAlignment="Center" HorizontalAlignment="Center" Margin="5,0,21,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Stretch" FontFamily="Segoe WP Black" Width="262"  />
+                                    <Image Grid.Column="2" Margin="1" Stretch="Uniform" Source="Images\CompanyLogo\AMIT_logo.jpg" HorizontalAlignment="Right"  VerticalAlignment="Center" />
+                                </Grid>
+                            </Border>
+                            <Label x:Name="lblCreds" Grid.Row="1" FontSize="14" FontWeight="Black"  Content="Credentials Required"  TextBlock.TextAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Stretch" FontFamily="Segoe WP Black"  />
+
+                            <Grid Grid.Row="2" HorizontalAlignment="Center" Margin="0,0,0,0" Name="gridMain" VerticalAlignment="Center" Width="400" Height="120" >
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+
+                                <Image Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Source="Images/login_icon.png" Margin="0"  />
+
+                                <Grid Grid.Column="1" HorizontalAlignment="Stretch" Margin="0,0,0,0"  VerticalAlignment="Stretch" FocusManager.FocusedElement="{Binding ElementName=txtName}">
+
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"></RowDefinition>
+                                        <RowDefinition Height="*"></RowDefinition>
+                                        <RowDefinition Height="*"></RowDefinition>
+                                    </Grid.RowDefinitions>
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="100"></ColumnDefinition>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Label Content="User Name" Grid.Column="0" Grid.Row="0" TextBlock.TextAlignment="Center" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Stretch"  FontFamily="Segoe UI Semibold" FontSize="16" />
+                                    <TextBox Grid.Column="1" Grid.Row="0" Text="" Name="txtName" KeyDown="txtpass_KeyDown"  FontSize="16" Margin="0,0,0,3" VerticalContentAlignment="Center"/>
+
+                                    <Label  Content="Password" Grid.Column="0" Grid.Row="1" TextBlock.TextAlignment="Center" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Stretch" FontFamily="Segoe UI Semibold" FontSize="16"/>
+                                    <PasswordBox Password="" PasswordChar="*" Grid.Column="1" Grid.Row="1" Name="txtPassword" KeyDown="txtpass_KeyDown" VerticalContentAlignment="Center" Margin="0,3,0,0"/>
+
+                                    <Grid Grid.Column="1" Grid.Row="2" HorizontalAlignment="Stretch" Margin="0,0,0,0" VerticalAlignment="Stretch" >
+
+
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"></ColumnDefinition>
+                                            <ColumnDefinition Width="*"></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+
+                                        <!--<StackPanel Button.Click="StackPanel_Click" Height="40" VerticalAlignment="Bottom">-->
+                                        <Button  Content="Login" Name="btnOK" Grid.Column="0"  Grid.Row="2" Tag="MainWindow" Click="btnOK_Clicked" Margin="0,3,2,0" Style="{StaticResource buttonStyle}"  />
+                                        <!--</StackPanel>-->
+                                        <Button  Content="Cancel" Name="btnCancel"  Grid.Column="1"  Grid.Row="2" Margin="2,3,0,0"  Click="btnCancel_Clicked" Style="{StaticResource buttonStyle}"  />
+
+                                    </Grid>
+
+
+                                </Grid>
+
+                            </Grid>
+
+                            <Border Grid.Row="3" BorderThickness="0,0.5,0.5,0" BorderBrush="Gray">
+
+                                <Grid >
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="130"></ColumnDefinition>
+                                        <ColumnDefinition Width="135"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Label Grid.Column="0"  FontSize="12" FontWeight="Normal"  Content="Copyright © 2017-20"  Grid.Row="0" TextBlock.TextAlignment="Center" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Stretch" />
+                                    <Label Grid.Column="1" FontSize="12" FontWeight="Normal"  Content="All Rights Reserved."  Grid.Row="0" TextBlock.TextAlignment="Center" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Stretch" />
+
+                                </Grid>
+
+                            </Border>
+
+                        </Grid>
+                    </Border>
+
+                </Grid>
+            </Border>
+
+        </Grid>
+    </Border>
+</Window>
+

@@ -1,0 +1,31 @@
+﻿<Window x:Class="DeburringProcess_Peekay.Mivin.ReprintPackingDetails"
+        x:Name="ReprintPacking_Details"
+        Title="Reprint Packing Details"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DeburringProcess_Peekay.Mivin"
+        mc:Ignorable="d" Height="270" Width="250"  WindowStartupLocation="CenterScreen" WindowStyle="ThreeDBorderWindow" WindowState="Normal" ResizeMode="NoResize" Loaded="ReprintPackingDetails_Loaded" Icon="../Peekay_Icon.ico" Background="Azure">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="10"/>
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Content="Selected Pump Model Number : " FontWeight="SemiBold" FontSize="14" FontFamily="Segoe UI"/>
+        <!--<ComboBox Grid.Row="1" x:Name="cmbPumpModel" FontWeight="SemiBold" FontSize="16" FontFamily="Segoe UI" Height="30" Width="180" IsTextSearchEnabled="True" IsEditable="True"/>-->
+        <Label Grid.Row="1" Name="lblPumpModel" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16"/>
+        <Label Grid.Row="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Content="Packaging Type : " FontWeight="SemiBold" FontSize="14" FontFamily="Segoe UI"/>
+        <Label Grid.Row="3" Name="lblPackagingType" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16"/>
+        <Label Grid.Row="4" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Content="Number Of Prints : " FontWeight="SemiBold" FontSize="14" FontFamily="Segoe UI"/>
+        <TextBox Grid.Row="5" x:Name="txtNumOfPrints" FontWeight="SemiBold" FontSize="16" FontFamily="Segoe UI" Height="30" Width="180" Text="1" VerticalContentAlignment="Center" PreviewTextInput="txtNumOfPrints_PreviewTextInput" MaxLength="3" HorizontalContentAlignment="Center"/>
+        <Button x:Name="btnPrint" Grid.Row="7" Width="180" Content="Print" FontWeight="SemiBold" FontSize="14" FontFamily="Segoe UI" Click="btnPrint_Click"/>
+    </Grid>
+</Window>

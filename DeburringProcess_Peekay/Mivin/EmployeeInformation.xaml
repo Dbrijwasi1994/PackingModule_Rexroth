@@ -1,0 +1,99 @@
+﻿<UserControl x:Class="DeburringProcess_Peekay.Mivin.EmployeeInformation"
+             x:Name="EmployeeInformation_Control"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DeburringProcess_Peekay.Mivin"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="1200" Loaded="EmployeeInformation_Control_Loaded">
+
+    <UserControl.Background>
+        <ImageBrush ImageSource="/Images/Background4.jpg" Opacity="0.3"/>
+    </UserControl.Background>
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Resources/ControlStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="40" />
+        </Grid.RowDefinitions>
+
+        <DockPanel Grid.Row="0">
+            <DataGrid x:Name="EmpInfoGrid" AutoGenerateColumns="False" Grid.Row="1" IsEnabled="True" IsReadOnly="False" Margin="0" CanUserResizeRows="False" BorderThickness="1" VerticalGridLinesBrush="#2F000000" HorizontalGridLinesBrush="#2F000000" CanUserDeleteRows="False" CanUserResizeColumns="False" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" CanUserAddRows="False" IsSynchronizedWithCurrentItem="False" HeadersVisibility="Column" HorizontalContentAlignment="Center" AreRowDetailsFrozen="False" CanUserSortColumns="True" CanUserReorderColumns="False" SelectionMode="Single" SelectionUnit="FullRow" RowHeight="45" ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" ColumnHeaderHeight="50" PreviewMouseDown="EmpInfoGrid_PreviewMouseDown" GotFocus="EmpInfoGrid_GotFocus" RowEditEnding="EmpInfoGrid_RowEditEnding" BeginningEdit="EmpInfoGrid_BeginningEdit" CellEditEnding="EmpInfoGrid_CellEditEnding" SelectionChanged="EmpInfoGrid_SelectionChanged">
+                <DataGrid.Resources>
+                    <ResourceDictionary Source="../Resources/DataGridStyle.xaml"/>
+                </DataGrid.Resources>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Path=EmpId, Mode=TwoWay}" Header="Employee ID" IsReadOnly="True" MinWidth="150" MaxWidth="400" EditingElementStyle="{StaticResource DataGridTextColumnEditingElementStyle}">
+                    </DataGridTextColumn>
+
+                    <DataGridTextColumn Binding="{Binding Path=Name, Mode=TwoWay}" Header="Name" IsReadOnly="False" MinWidth="150" MaxWidth="400" EditingElementStyle="{StaticResource DataGridTextColumnEditingElementStyle}"/>
+
+                    <local:DataGridNumericColumn Binding="{Binding Path=Phone, Mode=TwoWay}" Header="Phone No." IsReadOnly="False" MinWidth="150" MaxWidth="300" EditingElementStyle="{StaticResource GridEditingElementStylePhone}"/>
+
+                    <DataGridTemplateColumn Header="Is Admin" MinWidth="200">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox Name="chkIsAdmin" IsChecked="{Binding Path=IsAdmin,Mode=TwoWay}" Margin="5 5 5 5" HorizontalAlignment="Center" VerticalAlignment="Center" Click="chkIsAdmin_Click" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTextColumn Binding="{Binding Path=Email, Mode=TwoWay}" Header="Email" IsReadOnly="False" MinWidth="200" MaxWidth="500" EditingElementStyle="{StaticResource DataGridTextColumnEditingElementStyle}"/>
+
+                    <DataGridTemplateColumn Header="Password" MinWidth="200" MaxWidth="400">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <PasswordBox Name="PasswordBoxPass" local:PasswordHelper.Attach="True" local:PasswordHelper.Password="{Binding Path=Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" PasswordChar="*" MinWidth="160"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                        <DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <PasswordBox Name="PasswordBoxPassword" local:PasswordHelper.Attach="True" local:PasswordHelper.Password="{Binding Path=Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" PasswordChar="*" MinWidth="160"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTemplateColumn Header="Employee Role" MinWidth="150" MaxWidth="300">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock HorizontalAlignment="Stretch" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding Path=EmployeeRole, Mode=TwoWay}" MinWidth="140" Width="auto" MaxWidth="280" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                        <DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <ComboBox x:Name="comboEmployeeRole" SelectedItem="{Binding Path=EmployeeRole, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="29" MinWidth="140" MaxWidth="280" HorizontalAlignment="Center" Loaded="comboEmployeeRole_Loaded"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </DockPanel>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Image Grid.Column="0" Margin= "2,4,2,1" Stretch="Uniform " HorizontalAlignment="Left" Height="35" Source="/Images/CompanyLogo/AMgrouplogo.png"/>
+            <DockPanel Grid.Column="2">
+                <Border DockPanel.Dock="Bottom" Background="Transparent" BorderThickness="1,1,1,1" Height="40" Margin="0,0,0,0">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button Name="btnRefresh" Content="Refresh"  Style="{StaticResource GlassButton}"  Height="30" Width="80" Margin="1,4,1,0" Click="btnRefresh_Click" VerticalAlignment="Top"></Button>
+                        <Button Name="btnNew" Content="New"  Style="{StaticResource GlassButton}"  Height="30" Width="60" Margin="1" Click="btnNew_Click"></Button>
+                        <Button Name="btnSave" Style="{StaticResource GlassButton}" Height="30" Width="80"  Margin="1" Click="btnSave_Click">Save</Button>
+                        <Button Name="btnDelete" Style="{StaticResource GlassButton}" Content="Delete" Height="30" Width="100" Margin="1" Click="btnDelete_Click"></Button>
+                    </StackPanel>
+                </Border>
+            </DockPanel>
+        </Grid>
+    </Grid>
+</UserControl>

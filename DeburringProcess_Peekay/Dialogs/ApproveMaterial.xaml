@@ -1,0 +1,117 @@
+﻿<Window x:Class="DeburringProcess_Peekay.Dialogs.ApproveMaterial"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DeburringProcess_Peekay.Dialogs"
+        mc:Ignorable="d"
+        Title="ApproveMaterial" WindowStartupLocation="CenterScreen"  Height="280" Width="380" ShowInTaskbar="False" ResizeMode="NoResize">
+    <Window.Resources>
+        <Style x:Key="buttonStyle" TargetType="{x:Type Button}">
+            <Setter Property="TextBlock.TextAlignment" Value="Center"></Setter>
+            <Setter Property="Background" Value="Black"></Setter>
+            <Setter Property="Foreground" Value="White"></Setter>
+            <Setter Property="FontSize" Value="15"></Setter>
+            <Setter Property="FontWeight" Value="Bold"></Setter>
+            <Setter Property="BorderBrush" Value="White"></Setter>
+            <Setter Property="BorderThickness" Value="0.5"></Setter>
+            <Setter Property="FontFamily" Value="Segoe UI Semibold"></Setter>
+        </Style>
+        
+        <Style x:Key="labelStyle2" TargetType="{x:Type Label}">
+            <Setter Property="Foreground" Value="White"></Setter>
+            <Setter Property="Background" Value="#293955"/>
+            <Setter Property="FontSize" Value="15"></Setter>
+            <Setter Property="FontFamily" Value="Segoe UI Semibold"></Setter>
+            <Setter Property="FontWeight" Value="Bold"></Setter>
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+            <Setter Property="HorizontalAlignment" Value="Stretch"></Setter>
+            <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+            <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+        </Style>
+        
+        <Style x:Key="placeHolder" TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Grid>
+                            <TextBox Text="{Binding Path=Text, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" x:Name="textSource" Background="Transparent" Panel.ZIndex="2" FontFamily="Segoe UI" FontSize="14" FontWeight="Bold" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                            <TextBox Text="{TemplateBinding Tag}" Background="{TemplateBinding Background}" Panel.ZIndex="1" FontSize="14">
+                                <TextBox.Style>
+                                    <Style TargetType="{x:Type TextBox}">
+                                        <Setter Property="Foreground" Value="Transparent"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Path=Text, Source={x:Reference textSource}}" Value="">
+                                                <Setter Property="Foreground" Value="Gray"/>
+                                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBox.Style>
+                            </TextBox>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <Style x:Key="GroupBoxStyle" TargetType="{x:Type GroupBox}">
+            <Setter Property="Foreground" Value="#293955"></Setter>
+            <Setter Property="FontSize" Value="15"></Setter>
+            <Setter Property="Margin" Value="0"></Setter>
+            <Setter Property="FontFamily" Value="Segoe UI Semibold"></Setter>
+            <Setter Property="FontWeight" Value="Bold"></Setter>
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+            <Setter Property="HorizontalAlignment" Value="Stretch"></Setter>
+            <Setter Property="VerticalContentAlignment" Value="Stretch"></Setter>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+            <!--<Setter Property="BorderBrush" Value="#293955"/>
+        <Setter Property="BorderThickness" Value="3"/>-->
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="40"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" x:Name="lblMachine" Content="Close UT Number" Style="{StaticResource labelStyle2}" Height="36"/>
+            <Label Grid.Column="1" x:Name="lblCloseButton" Content="X" HorizontalAlignment="Stretch" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="White" FontSize="20" FontWeight="ExtraBold" Style="{StaticResource labelStyle2}" Height="36" ToolTip="Close" MouseLeftButtonDown="lblCloseButton_MouseLeftButtonDown"/>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2"/>
+                <RowDefinition Height="150"/>
+                <RowDefinition Height="2"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <GroupBox Grid.Row="1" x:Name="groupRemarks" Header="Remarks" Style="{StaticResource GroupBoxStyle}">
+                <Grid x:Name="RejectionGrid">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Text="Remarks : " Foreground="Black" FontWeight="Bold" FontFamily="Segoe UI" FontSize="16" HorizontalAlignment="Stretch" TextAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBox Grid.Row="1" x:Name="txtRejectionReason" Style="{StaticResource placeHolder}" Tag="Enter Rejection Reason Here :" Background="#EBEBEB" />
+                </Grid>
+            </GroupBox>
+            <Grid Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button Name="btnAccept" Grid.Column="0" Content="Accept" Style="{StaticResource buttonStyle}" ToolTip="Accept" Click="btnAccept_Click"/>
+                <Button Name="btnReject" Grid.Column="1" Content="Reject" Style="{StaticResource buttonStyle}" ToolTip="Reject" Click="btnReject_Click_1"/>
+                <Button Name="btnCancel" Grid.Column="2" Content="Cancel" Style="{StaticResource buttonStyle}" ToolTip="Cancel" Click="btnCancel_Click"/>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

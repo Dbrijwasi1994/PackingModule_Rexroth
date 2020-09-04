@@ -1,0 +1,603 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{73693DF9-C4BC-4A93-A099-4496E2FD6073}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PackingModule_Rexroth</RootNamespace>
+    <AssemblyName>PackingModule.Rexroth</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Peekay_Icon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EPPlus, Version=4.5.3.3, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.4.5.3.3\lib\net40\EPPlus.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NModbus4, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NModbus4.2.1.0\lib\net40\NModbus4.dll</HintPath>
+    </Reference>
+    <Reference Include="NReco.ImageGenerator, Version=1.1.1.0, Culture=neutral, PublicKeyToken=0ef6c878974c90ac, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>ExternalDLL\NReco.ImageGenerator.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Chart.WPF.SampleLayout, Version=17.3460.0.14, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>ExternalDLL\Syncfusion.Chart.WPF.SampleLayout.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Licensing, Version=17.3460.0.14, Culture=neutral, PublicKeyToken=632609b4d040f6b4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>ExternalDLL\Syncfusion.Licensing.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.SfChart.WPF, Version=15.4460.0.17, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>ExternalDLL\Syncfusion.SfChart.WPF.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.SfGauge.WPF, Version=17.3460.0.14, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>ExternalDLL\Syncfusion.SfGauge.WPF.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.SfInput.WPF, Version=15.4460.0.17, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>ExternalDLL\Syncfusion.SfInput.WPF.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.SfShared.Wpf, Version=15.4451.0.17, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>ExternalDLL\Syncfusion.SfShared.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Shared.WPF, Version=15.4460.0.17, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>ExternalDLL\Syncfusion.Shared.WPF.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web.Extensions.Design" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\eShopX.TPM.Peekay\eShopX.TPM.Peekay\eShopX.TPM.GUI\bin\Debug\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="ToastNotifications, Version=2.5.1.0, Culture=neutral, PublicKeyToken=e89d9d7314a7c797, processorArchitecture=MSIL">
+      <HintPath>..\packages\ToastNotifications.2.5.1\lib\net40\ToastNotifications.dll</HintPath>
+    </Reference>
+    <Reference Include="ToastNotifications.Messages, Version=2.5.1.0, Culture=neutral, PublicKeyToken=e89d9d7314a7c797, processorArchitecture=MSIL">
+      <HintPath>..\packages\ToastNotifications.Messages.2.5.1\lib\net40\ToastNotifications.Messages.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
+    <Reference Include="WPFToolkit.Extended, Version=1.5.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>ExternalDLL\WPFToolkit.Extended.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="DB Connection\MivinDataBaseAccess.cs" />
+    <Compile Include="Helpers\ImageFunctions.cs" />
+    <Compile Include="Helpers\Locations.cs" />
+    <Compile Include="Helpers\PrinterHelper.cs" />
+    <Compile Include="Helpers\QRScannerInfo.cs" />
+    <Compile Include="Mivin\CustomerInformation.xaml.cs">
+      <DependentUpon>CustomerInformation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Mivin\EmployeeInformation.xaml.cs">
+      <DependentUpon>EmployeeInformation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Mivin\MonthlyFulfillmentReport.xaml.cs">
+      <DependentUpon>MonthlyFulfillmentReport.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Mivin\MonthlyScheduleMaster.xaml.cs">
+      <DependentUpon>MonthlyScheduleMaster.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Mivin\PackingDashboard.xaml.cs">
+      <DependentUpon>PackingDashboard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Mivin\PackingEfficiencyReport.xaml.cs">
+      <DependentUpon>PackingEfficiencyReport.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Mivin\PackingMainDashboard.xaml.cs">
+      <DependentUpon>PackingMainDashboard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Mivin\PackingMainDashboard_Admins.xaml.cs">
+      <DependentUpon>PackingMainDashboard_Admins.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Mivin\PumpDetails.xaml.cs">
+      <DependentUpon>PumpDetails.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Mivin\PumpDispatchReport.xaml.cs">
+      <DependentUpon>PumpDispatchReport.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Mivin\PumpInformation.xaml.cs">
+      <DependentUpon>PumpInformation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Mivin\ReprintPackingDetails.xaml.cs">
+      <DependentUpon>ReprintPackingDetails.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Mivin\ScheduleMasterImport.xaml.cs">
+      <DependentUpon>ScheduleMasterImport.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Mivin\ShiftDetails.xaml.cs">
+      <DependentUpon>ShiftDetails.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Mivin\ShiftTargetMaster.xaml.cs">
+      <DependentUpon>ShiftTargetMaster.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Mivin\TargetMaster.xaml.cs">
+      <DependentUpon>TargetMaster.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CustomerInfoEntity.cs" />
+    <Compile Include="Models\EmpInfoEntity.cs" />
+    <Compile Include="Models\MonthlyfulfilmentReportEntity.cs" />
+    <Compile Include="Models\MonthlyScheduleMasterEntity.cs" />
+    <Compile Include="Models\PackingEfficiencyReportEntity.cs" />
+    <Compile Include="Models\PumpDispatchReportEntity.cs" />
+    <Compile Include="Models\PumpInfoEntity.cs" />
+    <Compile Include="Models\PumpQRData.cs" />
+    <Compile Include="Models\RunningShiftSchedulesEntity.cs" />
+    <Compile Include="Models\ScheduleMasterEntity.cs" />
+    <Compile Include="Models\ShiftDetailsEntity.cs" />
+    <Compile Include="Models\ShiftTargetMasterEntity.cs" />
+    <Compile Include="ProductionData.xaml.cs">
+      <DependentUpon>ProductionData.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DispatchProcessCtrl.xaml.cs">
+      <DependentUpon>DispatchProcessCtrl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PDFViewer\PdfViewer.xaml.cs">
+      <DependentUpon>PdfViewer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\DownTime.xaml.cs">
+      <DependentUpon>DownTime.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\DownTimeSummary.xaml.cs">
+      <DependentUpon>DownTimeSummary.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\InspectionRpt.xaml.cs">
+      <DependentUpon>InspectionRpt.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\QRContent.xaml.cs">
+      <DependentUpon>QRContent.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Settings.xaml.cs">
+      <DependentUpon>Settings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WebView.xaml.cs">
+      <DependentUpon>WebView.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Mivin\CustomerInformation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Mivin\EmployeeInformation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Mivin\MonthlyFulfillmentReport.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Mivin\MonthlyScheduleMaster.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Mivin\PackingDashboard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Mivin\PackingEfficiencyReport.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Mivin\PackingMainDashboard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Mivin\PackingMainDashboard_Admins.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Mivin\PumpDetails.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Mivin\PumpDispatchReport.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Mivin\PumpInformation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Mivin\ReprintPackingDetails.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Mivin\ScheduleMasterImport.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Mivin\ShiftDetails.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Mivin\ShiftTargetMaster.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Mivin\TargetMaster.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ProductionData.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DispatchProcessCtrl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DeburringProcess.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\ApproveMaterial.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\DialogBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\DialogBoxYesNo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\LoginDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="InspectionProcess.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LoginPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DB Connection\ConnectionManager.cs" />
+    <Compile Include="DB Connection\DatabaseAccess.cs" />
+    <Compile Include="DeburringProcess.xaml.cs">
+      <DependentUpon>DeburringProcess.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\ApproveMaterial.xaml.cs">
+      <DependentUpon>ApproveMaterial.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\DialogBox.xaml.cs">
+      <DependentUpon>DialogBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\DialogBoxYesNo.xaml.cs">
+      <DependentUpon>DialogBoxYesNo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\LoginDialog.xaml.cs">
+      <DependentUpon>LoginDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\Logger.cs" />
+    <Compile Include="Helpers\Utility.cs" />
+    <Compile Include="InspectionProcess.xaml.cs">
+      <DependentUpon>InspectionProcess.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LoginPage.xaml.cs">
+      <DependentUpon>LoginPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="PDFViewer\PdfViewer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\AppResources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\ControlStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\DataGridStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\DeburringProcessResources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\MainWindowResources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Theme.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\DownTime.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\DownTimeSummary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\InspectionRpt.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\QRContent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Settings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WebView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Models\DeburringProcessEntity.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <Resource Include="Images\Assets\refresh_icon.png" />
+    <Resource Include="Images\Rexroth_Login_bg.jpg" />
+    <Content Include="Mivin\PrintPRNFile\Rexroth.prn">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+    <Content Include="ExternalDLL\EPPlus.dll" />
+    <Content Include="ExternalDLL\NReco.ImageGenerator.dll" />
+    <Content Include="ExternalDLL\Syncfusion.Chart.WPF.SampleLayout.dll" />
+    <Content Include="ExternalDLL\Syncfusion.Licensing.dll" />
+    <Content Include="ExternalDLL\Syncfusion.SfChart.WPF.dll" />
+    <Content Include="ExternalDLL\Syncfusion.SfGauge.WPF.dll" />
+    <Content Include="ExternalDLL\Syncfusion.SfInput.WPF.dll" />
+    <Content Include="ExternalDLL\Syncfusion.SfShared.Wpf.dll" />
+    <Content Include="ExternalDLL\Syncfusion.Shared.WPF.dll" />
+    <Content Include="ExternalDLL\WPFToolkit.Extended.dll" />
+    <Resource Include="Images\Assets\settings.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Assets\appbar.cog.png" />
+    <Resource Include="Images\Assets\appbar.control.guide.png" />
+    <Resource Include="Images\CompanyLogo\RexrothLogo.jpg" />
+    <Resource Include="Images\CompanyLogo\RexrothLogo_Main.jpg" />
+    <Resource Include="Images\CompanyLogo\AMgrouplogo.png" />
+    <Resource Include="Images\CompanyLogo\RexrothLogo_New.png" />
+    <Content Include="Images\ConnectionStatus\DisConnected.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\ConnectionStatus\NetworkNotOk.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\ConnectionStatus\NetworkOk.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\ConnectionStatus\Running.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\ConnectionStatus\Runningz.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\ConnectionStatus\Stopped.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\startDown.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\StopDown.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\UpdateDown.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Mivin\PackingStickerTemplate\PackingSticker.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\InspectionDataReport.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\PumpDispatchReport_Mivin.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\PackingEfficiencyReport_Mivin.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\ScheduleImportFormat_Mivin.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="Templates\MonthlyFulfilmentReport_Mivin.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Templates\spc_characteristics_.xlsx" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Assets\user.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Peekay_Icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Assets\appbar.cogs.png" />
+    <Resource Include="Images\Assets\appbar.input.pen.down.png" />
+    <Resource Include="Images\Assets\appbar.layer.add.png" />
+    <Resource Include="Images\Assets\appbar.link.png" />
+    <Resource Include="Images\Assets\appbar.source.fork.png" />
+    <Resource Include="Images\Assets\appbar.source.pull.png" />
+    <Resource Include="Images\Assets\appbar.stock.up.png" />
+    <Resource Include="Images\Assets\appbar.timer.png" />
+    <Resource Include="Images\Assets\appbar.zune.png" />
+    <Resource Include="Images\Assets\appbartfm.png" />
+    <Resource Include="Images\Assets\appbarupload.png" />
+    <Resource Include="Images\Assets\favorite.png" />
+    <Resource Include="Images\Assets\home.png" />
+    <Resource Include="Images\Assets\home1.png" />
+    <Resource Include="Images\Assets\list.png" />
+    <Resource Include="Images\Assets\person.png" />
+    <Resource Include="Images\Assets\search.png" />
+    <Resource Include="Images\Background.png" />
+    <Resource Include="Images\Background1.jpg" />
+    <Resource Include="Images\Background2.jpg" />
+    <Resource Include="Images\Background3.JPG" />
+    <Resource Include="Images\Background4.JPG" />
+    <Resource Include="Images\CompanyLogo\AceGroup_Logo.png" />
+    <Resource Include="Images\CompanyLogo\AmitLogoTransparent.png" />
+    <Resource Include="Images\CompanyLogo\AMIT_logo.jpg" />
+    <Resource Include="Images\CompanyLogo\Peekay_Logo.png" />
+    <Resource Include="Images\CompanyLogo\Peekay_Logo_long.png" />
+    <Resource Include="Images\email.png" />
+    <Resource Include="Images\Hamburger.png" />
+    <Resource Include="Images\InwardIcon.png" />
+    <Resource Include="Images\login_icon.png" />
+    <Resource Include="Images\logout.png" />
+    <Resource Include="Images\print.png" />
+    <Resource Include="Images\QR.png" />
+    <Resource Include="Images\QR1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Assets\shutdown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Assets\Search.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\login.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\clock_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\clock_icon2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Assets\save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Drawing.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Login_Key.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\download.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Mivin\PackingStickers\" />
+    <Folder Include="Mivin\PrintPRNFile\GeneratedFiles\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

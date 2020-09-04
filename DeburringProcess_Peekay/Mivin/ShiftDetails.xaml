@@ -1,0 +1,153 @@
+﻿<UserControl x:Class="DeburringProcess_Peekay.Mivin.ShiftDetails"
+             x:Name="ShiftDetailsControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DeburringProcess_Peekay.Mivin"
+             xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
+             mc:Ignorable="d" d:DesignHeight="400" d:DesignWidth="800" Loaded="ShiftDetailsControl_Loaded">
+    
+    <UserControl.Background>
+        <ImageBrush ImageSource="/Images/Background4.jpg" Opacity="0.3"/>
+    </UserControl.Background>
+    <UserControl.Resources>
+        <ResourceDictionary Source="../Resources/ControlStyles.xaml"/>
+    </UserControl.Resources>
+
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="Shift ID" FontWeight="Bold" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White"/>
+                <ComboBox x:Name="comboShiftId" Grid.Column="1" Height="24" SelectionChanged="comboShiftId_SelectionChanged" FontWeight="SemiBold" FontSize="14"/>
+                <TextBlock Grid.Column="2" Text="From Day" FontWeight="Bold" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White"/>
+                <ComboBox x:Name="comboFromDay" Grid.Column="3" Height="24" FontWeight="SemiBold" FontSize="14"/>
+                <TextBlock Grid.Column="4" Text="To Day" FontWeight="Bold" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White"/>
+                <ComboBox x:Name="comboToDay" Grid.Column="5" Height="24" FontWeight="SemiBold" FontSize="14"/>
+            </Grid>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="Shift Name" FontWeight="Bold" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White"/>
+                <TextBox x:Name="txtShiftName" Grid.Column="1" Height="24" FontWeight="SemiBold"/>
+                <TextBlock Grid.Column="2" Text="From Time" FontWeight="Bold" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White"/>
+                
+                <syncfusion:DateTimeEdit x:Name="timePickerFromTime" Grid.Column="3" Height="24" Pattern="CustomPattern" CustomPattern="hh:mm:ss tt" MinDateTime="12/31/1947 23:59:00" IsCalendarEnabled="False" AllowDrop="False" IsPopupEnabled="False" IsButtonPopUpEnabled="False" NoneDateText="No Time Available" IsVisibleRepeatButton="False" UpRepeatButtonMargin="0" DownRepeatButtonMargin="0" FontWeight="SemiBold" FontSize="14" DateTimeChanged="timePickerFromTime_DateTimeChanged" IsScrollingOnCircle="False" EnableMouseWheelEdit="False"/>
+                
+                <TextBlock Grid.Column="4" Text="To Time" FontWeight="Bold" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White"/>
+                
+                <syncfusion:DateTimeEdit x:Name="timePickerToTime" Grid.Column="5" Height="24" Pattern="CustomPattern" CustomPattern="hh:mm:ss tt" MinDateTime="12/31/1947 23:59:00" IsCalendarEnabled="False" AllowDrop="False" IsButtonPopUpEnabled="False" NoneDateText="No Time Available" UpRepeatButtonMargin="0" DownRepeatButtonMargin="0" FontWeight="SemiBold" FontSize="14" IsVisibleRepeatButton="False" IsScrollingOnCircle="False" EnableMouseWheelEdit="False"/>
+            </Grid>
+        </Grid>
+        <DataGrid Grid.Row="1" x:Name="dataGridShiftDetails" AutoGenerateColumns="False" ItemsSource="{Binding}" IsEnabled="True" IsReadOnly="False" Margin="2" CanUserResizeRows="False"  BorderThickness="1" VerticalGridLinesBrush="#2F000000" HorizontalGridLinesBrush="#2F000000" CanUserDeleteRows="False"  CanUserResizeColumns="False" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" CanUserAddRows="False" IsSynchronizedWithCurrentItem="False" HeadersVisibility="Column" HorizontalContentAlignment="Center" AreRowDetailsFrozen="False" CanUserSortColumns="True" CanUserReorderColumns="False" SelectionMode="Single" SelectionUnit="FullRow" RowHeight="45" ColumnHeaderHeight="50" ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" SelectionChanged="dataGridShiftDetails_SelectionChanged"><!--ColumnHeaderStyle="{StaticResource DataGridColumnHeaderstyle}" CellStyle="{StaticResource cellstyle}"-->
+            <DataGrid.Resources>
+                <ResourceDictionary Source="../Resources/DataGridStyle.xaml"/>
+            </DataGrid.Resources>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header=" Shift ID"  CanUserSort="True" Binding="{Binding ShiftID}" IsReadOnly="True" MinWidth="120" Width="auto">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="HorizontalAlignment" Value="Stretch" />
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                            <Setter Property="TextAlignment" Value="Left" />
+                            <Setter Property="Padding" Value="5"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header=" Shift Name"  CanUserSort="True" Binding="{Binding ShiftName}" IsReadOnly="True" MinWidth="120" Width="auto">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="HorizontalAlignment" Value="Stretch" />
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                            <Setter Property="TextAlignment" Value="Left" />
+                            <Setter Property="Padding" Value="5"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header=" From Day"  CanUserSort="True" Binding="{Binding FromDay}" IsReadOnly="True" MinWidth="120" Width="auto">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="HorizontalAlignment" Value="Stretch" />
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                            <Setter Property="TextAlignment" Value="Left" />
+                            <Setter Property="Padding" Value="5"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header=" From Time"  CanUserSort="True" Binding="{Binding FromTime}" IsReadOnly="True" MinWidth="120" Width="auto">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="HorizontalAlignment" Value="Stretch" />
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                            <Setter Property="TextAlignment" Value="Left" />
+                            <Setter Property="Padding" Value="5"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header=" To Day"  CanUserSort="True" Binding="{Binding ToDay}" IsReadOnly="True" MinWidth="120" Width="auto">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="HorizontalAlignment" Value="Stretch" />
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                            <Setter Property="TextAlignment" Value="Left" />
+                            <Setter Property="Padding" Value="5"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header=" To Time"  CanUserSort="True" Binding="{Binding ToTime}" IsReadOnly="True" MinWidth="120" Width="auto">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="HorizontalAlignment" Value="Stretch" />
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                            <Setter Property="TextAlignment" Value="Left" />
+                            <Setter Property="Padding" Value="5"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Image Grid.Column="0" Margin= "2,4,2,1" Stretch="Uniform " HorizontalAlignment="Left" Height="35" Source="/Images/CompanyLogo/AMgrouplogo.png"/>
+            <DockPanel Grid.Column="2">
+                <Border DockPanel.Dock="Bottom" Background="Transparent" BorderThickness="1,1,1,1" Height="40" Margin="0,0,0,0">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button Name="btnClearAll" Content="Clear All" Style="{StaticResource GlassButton}" Width="110" Margin="1,4" Click="btnClearAll_Click"/>
+                        <Button Name="btnSave" Style="{StaticResource GlassButton}" Height="30" Width="80" Margin="1" Click="btnSave_Click">Save</Button>
+                    </StackPanel>
+                </Border>
+            </DockPanel>
+        </Grid>
+    </Grid>
+</UserControl>

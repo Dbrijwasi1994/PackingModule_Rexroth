@@ -1,0 +1,291 @@
+﻿<UserControl x:Class="PackingModule_Rexroth.Mivin.PackingMainDashboard"
+             x:Name="PackingDashboard_Control"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PackingModule_Rexroth.Mivin"
+             xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
+             mc:Ignorable="d" 
+             d:DesignHeight="1000" d:DesignWidth="1800" Loaded="PackingDashboard_Control_Loaded" Unloaded="PackingDashboard_Control_Unloaded">
+
+    <UserControl.Background>
+        <ImageBrush ImageSource="/Images/Background4.jpg" Opacity="0.3"/>
+    </UserControl.Background>
+    <UserControl.Resources>
+        <ResourceDictionary Source="../Resources/ControlStyles.xaml"/>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Margin="2,2,2,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Margin="0,0,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="215*"/>
+                    <ColumnDefinition Width="318*"/>
+                    <ColumnDefinition Width="50*"/>
+                    <ColumnDefinition Width="1198*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0" Content="RUNNING SCHEDULE STATUS" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Bold" FontSize="18" Foreground="White" Background="#606060" Grid.ColumnSpan="4"/>
+                <StackPanel Orientation="Horizontal" Grid.Column="4" Background="#606060">
+                    <Label x:Name="lblScannerStatus" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Bold" FontSize="18" Foreground="DarkSeaGreen" Background="#606060"/>
+                    <Image x:Name="imgScannerStatus"/>
+                </StackPanel>
+            </Grid>
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <DataGrid Grid.Column="0" x:Name="RunningModelDetailsGrid" AutoGenerateColumns="False" IsEnabled="True" IsReadOnly="True" CanUserResizeRows="False" BorderThickness="1" VerticalGridLinesBrush="#2F000000" HorizontalGridLinesBrush="#2F000000" CanUserDeleteRows="False" CanUserResizeColumns="True" HorizontalAlignment="Stretch" Margin="0,2,0,2" VerticalAlignment="Stretch" CanUserAddRows="False" IsSynchronizedWithCurrentItem="False" HeadersVisibility="Column" HorizontalContentAlignment="Center" AreRowDetailsFrozen="False" CanUserSortColumns="True" CanUserReorderColumns="False" SelectionMode="Single" SelectionUnit="FullRow" RowHeight="45" ColumnHeaderHeight="60" ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                    <DataGrid.Resources>
+                        <ResourceDictionary Source="../Resources/DataGridStyle.xaml"/>
+                    </DataGrid.Resources>
+
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding Path=WorkOrderNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="Work Order No." MinWidth="100" MaxWidth="300" Width="120" Visibility="Collapsed" FontSize="20"/>
+
+                        <DataGridTextColumn Binding="{Binding Path=RunningPumpModel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="Pump Part No." MinWidth="100" MaxWidth="300" FontSize="24"/>
+
+                        <DataGridTextColumn Binding="{Binding Path=CustomerModel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="Cust. Part No" MinWidth="100" MaxWidth="300" FontSize="24"/>
+
+                        <DataGridTextColumn Binding="{Binding Path=QuantityPerBox, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="Qty Per Box" MinWidth="100" MaxWidth="300" FontSize="24"/>
+
+                        <DataGridTextColumn Binding="{Binding Path=ScannedQuantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="Scanned Qty" MinWidth="100" Width="160" MaxWidth="300" FontSize="24"/>
+
+                        <DataGridTextColumn Binding="{Binding Path=Operator, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="Operator" MinWidth="120" Width="120" MaxWidth="300" Visibility="Collapsed" FontSize="24"/>
+
+                        <DataGridTextColumn Binding="{Binding Path=LastScannedSerialNum, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="Last Scanned SlNo." MinWidth="140" MaxWidth="400" FontSize="24"/>
+
+                        <DataGridTextColumn Binding="{Binding Path=WorkOrderStatus, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="Status" MinWidth="100" MaxWidth="300" FontSize="24"/>
+
+                        <DataGridTemplateColumn Header="" MinWidth="100" MaxWidth="200">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button x:Name="btnHold" Content="Hold" Height="30" Margin="5,0,5,0" IsEnabled="{Binding Path=IsHoldEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource GlassButton}" Click="btnHold_Click" MinWidth="80"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                        <DataGridTemplateColumn Header="" MinWidth="100" MaxWidth="200" Visibility="Collapsed">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button x:Name="btnPrint" Margin="5,0,5,0" Style="{StaticResource GlassButton}" IsEnabled="False" Height="30">
+                                        <Button.Content>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Source="/Images/print.png" Width="40"/>
+                                                <TextBlock Text="Print" TextAlignment="Center"/>
+                                            </StackPanel>
+                                        </Button.Content>
+                                    </Button>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                    <Image x:Name="imgScan" Width="50" Margin="5" Source="/Images/QR.png" Height="45" ToolTip="Scan Model" Mouse.MouseDown="imgScan_MouseDown" IsEnabled="True"/>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <Button x:Name="btnForceClose" Grid.Row="0" Content="Force Close" Height="28" Margin="5,5,5,0" Style="{StaticResource GlassButton}" Click="btnForceClose_Click" Width="100"/>
+                        <CheckBox x:Name="chkAutoPrint" Grid.Row="1" Content="Auto Print" IsChecked="False" Height="28" Foreground="White" VerticalContentAlignment="Center" FontWeight="SemiBold" FontSize="16" HorizontalAlignment="Center" Width="100"/>
+                        <Button x:Name="btnReprint" Grid.Row="2" Content="Reprint" Height="28" Margin="5,0,5,5" Style="{StaticResource GlassButton}" Width="100" Click="btnReprint_Click"/>
+                    </Grid>
+                </StackPanel>
+            </Grid>
+        </Grid>
+
+        <Grid Grid.Row="1" Margin="2,0,2,2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="300"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="240"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="50"/>
+                        </Grid.ColumnDefinitions>
+                        <DatePicker x:Name="dtpDate" Grid.Column="0" FontSize="32" FontWeight="Bold" Foreground="#002B49" SelectedDateChanged="dtpDate_SelectedDateChanged"/>
+                        <ComboBox x:Name="cmbPumpModelDetails" Grid.Column="1" SelectedIndex="0" FontSize="32" FontWeight="Bold" Foreground="#002B49" SelectionChanged="cmbPumpModelDetails_SelectionChanged" Margin="0,0,0,0" IsTextSearchEnabled="True" TextSearch.TextPath="PumpModel" IsTextSearchCaseSensitive="False"/>
+                        <Button x:Name="btnRefresh" Grid.Column="2" Margin="3,0,3,0" ToolTip="Refresh" Focusable="False" Style="{x:Null}" Click="btnRefresh_Click">
+                            <Button.Content>
+                                <Image Source="/Images/Assets/refresh_icon.png"/>
+                            </Button.Content>
+                        </Button>
+                    </Grid>
+                    <Grid x:Name="packingQuantityGrid" Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0" Grid.Column="0" Background="WhiteSmoke" Margin="0,2,0,2">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Text="CUSTOMER SCHEDULE" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" TextAlignment="Center" Foreground="#002B49" FontWeight="Bold" FontSize="28" TextWrapping="WrapWithOverflow"/>
+                            <Label Name="lblPumpModelTarget" Grid.Row="1" Content="{Binding Path=MonthlyTarget, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalAlignment="Stretch" VerticalContentAlignment="Center" Foreground="#002B49" FontWeight="Bold" FontSize="80"/>
+                        </Grid>
+                        <Grid Grid.Row="0" Grid.Column="1" Background="WhiteSmoke" Margin="2,2,0,2">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Text="ACTUAL PRODUCED" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" TextAlignment="Center" Foreground="#002B49" FontWeight="Bold" FontSize="28" TextWrapping="WrapWithOverflow"/>
+                            <Label Name="lblPumpModelActual" Grid.Row="1" Content="{Binding Path=MonthlyActual, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalAlignment="Stretch" VerticalContentAlignment="Center" Foreground="#008F00" FontWeight="Bold" FontSize="80"/>
+                        </Grid>
+                        <Grid Grid.Row="0" Grid.Column="2" Background="WhiteSmoke" Margin="2,2,0,2">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Text="PENDING SCHEDULE" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" TextAlignment="Center" Foreground="#002B49" FontWeight="Bold" FontSize="28" TextWrapping="WrapWithOverflow"/>
+                            <Label Name="lblPumpModelPending" Grid.Row="1" Content="{Binding Path=MonthlyPending, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalAlignment="Stretch" VerticalContentAlignment="Center" Foreground="IndianRed" FontWeight="Bold" FontSize="80"/>
+                        </Grid>
+                        <Grid Grid.Row="1" Grid.Column="0" Background="WhiteSmoke" Margin="0,0,0,2">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Text="DAILY PROD TARGET" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" TextAlignment="Center" Foreground="#002B49" FontWeight="Bold" FontSize="28" TextWrapping="WrapWithOverflow"/>
+                            <Label Name="lblTotalShiftTarget" Grid.Row="1" Content="{Binding Path=DailyTarget, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalAlignment="Stretch" VerticalContentAlignment="Center" Foreground="#002B49" FontWeight="Bold" FontSize="80"/>
+                        </Grid>
+                        <Grid Grid.Row="1" Grid.Column="1" Background="WhiteSmoke" Margin="2,0,0,2">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Text="DAILY ACTUAL" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TextAlignment="Center" Foreground="#002B49" FontWeight="Bold" FontSize="28" TextWrapping="WrapWithOverflow"/>
+                            <Label x:Name="lblActualPumpsScanned" Grid.Row="1" Content="{Binding Path=DailyActual, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalAlignment="Stretch" VerticalContentAlignment="Center" Foreground="#008F00" FontWeight="Bold" FontSize="80"/>
+                        </Grid>
+                        <Grid Grid.Row="1" Grid.Column="2" Background="WhiteSmoke" Margin="2,0,0,2">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Text="DAILY PENDING" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TextAlignment="Center" Foreground="#002B49" FontWeight="Bold" FontSize="28" TextWrapping="WrapWithOverflow"/>
+                            <Label x:Name="lblPendingPumps" Grid.Row="1" Content="{Binding Path=DailyPending, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalAlignment="Stretch" VerticalContentAlignment="Center" Foreground="IndianRed" FontWeight="Bold" FontSize="80"/>
+                        </Grid>
+                    </Grid>
+                </Grid>
+
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="34"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="34"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" Content="Shift Target VS Actual" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Bold" FontSize="15" Foreground="White" Background="#606060" Margin="5,0,5,2"/>
+                    <syncfusion:SfCircularGauge Name="gaugeShiftTargetVsActual" Grid.Row="1" Background="White" GaugeHeaderPosition="0.35,0.4" HeaderAlignment="Custom" Margin="5,2,5,2" >
+                        <syncfusion:SfCircularGauge.Resources>
+                            <Style TargetType="syncfusion:CircularScaleLabel">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="syncfusion:CircularScaleLabel">
+                                            <Grid>
+                                                <TextBlock Text="{Binding Content}" Foreground="{Binding Foreground}" FontSize="{Binding LabelFontSize}" Margin="0,15,0,0" />
+                                                <!--Customized Label Position-->
+                                            </Grid>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </syncfusion:SfCircularGauge.Resources>
+                        <syncfusion:SfCircularGauge.GaugeHeader>
+                            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="0">
+                                <TextBlock Foreground="Gray" FontSize="30" HorizontalAlignment="Center" FontWeight="Bold">
+                        <Run Text="{Binding ShiftActual}"></Run>
+                        <Run Text="{Binding ElementName=gauge1, Path=Scales[0].Ranges[0].EndValue, Mode=TwoWay}"></Run>
+                        <Run Text=""></Run>
+                                </TextBlock>
+                                <TextBlock Text="" Height="10"/>
+                                <TextBlock Text="{Binding ShiftwiseActual}" Foreground="Gray" FontSize="14"/>
+                                <TextBlock Text="" Height="10"/>
+                                <TextBlock Text="{Binding ShiftwiseTarget}" Foreground="Gray" FontSize="14"/>
+                            </StackPanel>
+                        </syncfusion:SfCircularGauge.GaugeHeader>
+                        <syncfusion:SfCircularGauge.Scales>
+                            <syncfusion:CircularScale x:Name="scaleShiftTargetVsActual" RimStroke="#FFE8E8E8" RimStrokeThickness="60" TickStroke="#c1c1c1" SmallTickStroke="#c1c1c1" TickShape="Triangle" LabelStroke="#999999" FontSize="10" FontWeight="SemiBold" RangePointerPosition="Cross" TickLength="0" LabelOffset="-0.1" LabelPosition="Custom" Interval="100" MinorTicksPerInterval="0" BindRangeStrokeToLabels="False" BindRangeStrokeToTicks="False" TickStrokeThickness="1.5" SmallTickStrokeThickness="1.5" StartAngle="180" SweepAngle="180" StartValue="0" EndValue="{Binding ShiftTarget}" Margin="0,10,0,0">
+                                <syncfusion:CircularScale.Ranges>
+                                    <syncfusion:CircularRange StartValue="0" EndValue="{Binding ShiftActual}" Stroke="#FF0DBCF5" />
+                                </syncfusion:CircularScale.Ranges>
+                                <syncfusion:CircularScale.Pointers>
+                                    <syncfusion:CircularPointer  Value="{Binding ShiftActual}" PointerType="RangePointer" RangePointerStroke="Transparent" RangePointerStrokeThickness="60" />
+                                </syncfusion:CircularScale.Pointers>
+                            </syncfusion:CircularScale>
+                        </syncfusion:SfCircularGauge.Scales>
+                    </syncfusion:SfCircularGauge>
+                    <Label Grid.Row="2" Content="Shift Efficiency" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" Background="#606060" VerticalContentAlignment="Center" FontWeight="Bold" FontSize="15" Foreground="White" Margin="5,2,5,2"/>
+                    <syncfusion:SfCircularGauge Name="gaugeShiftEfficiency" Grid.Row="3" Background="White" GaugeHeaderPosition="0.35,0.4" HeaderAlignment="Custom" Margin="5,2,5,2" >
+                        <syncfusion:SfCircularGauge.Resources>
+                            <Style TargetType="syncfusion:CircularScaleLabel">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="syncfusion:CircularScaleLabel">
+                                            <Grid>
+                                                <TextBlock Text="{Binding Content}" Foreground="{Binding Foreground}" FontSize="{Binding LabelFontSize}" Margin="0,15,0,0" />
+                                                <!--Customized Label Position-->
+                                            </Grid>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </syncfusion:SfCircularGauge.Resources>
+                        <syncfusion:SfCircularGauge.GaugeHeader >
+                            <StackPanel HorizontalAlignment="Center">
+                                <TextBlock  Foreground="Gray" FontSize="30" HorizontalAlignment="Center" FontWeight="Bold" >
+                        <Run Text="{Binding ShiftEfficiency}"></Run>
+                        <Run Text="{Binding ElementName=gauge1, Path=Scales[0].Ranges[0].EndValue, Mode=TwoWay}"></Run>
+                        <Run Text="%"></Run>
+                                </TextBlock>
+                                <TextBlock  Text="Shift Efficiency" Foreground="Gray" FontSize="13" Margin="10,20,0,0" />
+                            </StackPanel>
+                        </syncfusion:SfCircularGauge.GaugeHeader>
+                        <syncfusion:SfCircularGauge.Scales>
+                            <syncfusion:CircularScale x:Name="scaleShiftEfficiency" RimStroke="#FFE8E8E8" RimStrokeThickness="60" TickStroke="#c1c1c1" SmallTickStroke="#c1c1c1"  TickShape="Triangle" LabelStroke="#999999" FontSize="10" FontWeight="SemiBold"  RangePointerPosition="Cross" TickLength="0" LabelOffset="-0.1" LabelPosition="Custom" Interval="20" MinorTicksPerInterval="0" BindRangeStrokeToLabels="False" BindRangeStrokeToTicks="False" TickStrokeThickness="1.5" SmallTickStrokeThickness="1.5" StartAngle="180" SweepAngle="180" StartValue="0" EndValue="100" Margin="0,10,0,0">
+                                <syncfusion:CircularScale.Ranges>
+                                    <syncfusion:CircularRange StartValue="0" EndValue="{Binding ShiftEfficiency}" Stroke="#FF0DBCF5" />
+                                </syncfusion:CircularScale.Ranges>
+                                <syncfusion:CircularScale.Pointers>
+                                    <syncfusion:CircularPointer Value="{Binding ShiftEfficiency}" PointerType="RangePointer" RangePointerStroke="Transparent" RangePointerStrokeThickness="60" />
+                                </syncfusion:CircularScale.Pointers>
+                            </syncfusion:CircularScale>
+                        </syncfusion:SfCircularGauge.Scales>
+                    </syncfusion:SfCircularGauge>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>
