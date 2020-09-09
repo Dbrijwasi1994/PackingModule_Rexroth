@@ -716,6 +716,30 @@ namespace DeburringProcess_Peekay.DB_Connection
             }
         }
 
+        internal static void DeleteScannedPumpDetails(RunningModelStatusEntity runningModelStatusEntity)
+        {
+            SqlConnection conn = null;
+            string query = $"delete from ScannedDetails where IDD in(select top {runningModelStatusEntity.ScannedQuantity} IDD from ScannedDetails where PumpModel = @PumpModel and PackagingType = @PackagingType order by ScannedTS desc)";
+            try
+            {
+                conn = ConnectionManager.GetConnection();
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.CommandType = CommandType.Text;
+                cmd.Parameters.AddWithValue("@PumpModel", runningModelStatusEntity.RunningPumpModel);
+                cmd.Parameters.AddWithValue("@PackagingType", runningModelStatusEntity.PackagingType);
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteErrorLog("Error in deleting data from [dbo].[ScannedDetails] - \n" + ex.ToString());
+                throw;
+            }
+            finally
+            {
+                if (conn != null) conn.Close();
+            }
+        }
+
         internal static DataTable GetAllTargetMasterData(DateTime selectedDate)
         {
             DataTable dtTargetMasterData = new DataTable();

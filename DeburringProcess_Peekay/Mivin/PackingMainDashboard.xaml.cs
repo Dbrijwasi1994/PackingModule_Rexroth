@@ -40,6 +40,7 @@ namespace PackingModule_Rexroth.Mivin
     {
         string oldScanDataString = string.Empty;
         string currentStation = string.Empty;
+        DateTime scanResetTime = DateTime.Now;
         Ping netMon = default(Ping);
         TcpClient tcpClient = default(TcpClient);
         ModbusIpMaster master = default(ModbusIpMaster);
@@ -127,6 +128,7 @@ namespace PackingModule_Rexroth.Mivin
                     {
                         RunningModelDetailsGrid.ItemsSource = runningModelDetails;
                         cmbPumpModelDetails.SelectedValue = runningModelDetails.First().RunningPumpModel;
+                        scanResetTime = DateTime.Now.AddMinutes(5);
                     }
                     else
                     {
@@ -245,6 +247,7 @@ namespace PackingModule_Rexroth.Mivin
                     scanDataString = GetString(scanDataArray).Trim(char.MinValue).Trim();
                     if (!string.IsNullOrEmpty(scanDataString.Trim()))
                     {
+                        scanResetTime = DateTime.Now.AddMinutes(5);
                         if (scanDataString.Contains("-"))
                         {
                             string[] QrScanData = scanDataString.Split('-');
@@ -294,10 +297,23 @@ namespace PackingModule_Rexroth.Mivin
                     }
                 }
                 pumpScanTimer.IsEnabled = true;
+                if (scanResetTime <= DateTime.Now)
+                {
+                    var currentRunningModelData = RunningModelDetailsGrid.ItemsSource as ObservableCollection<RunningModelStatusEntity>;
+                    if (currentRunningModelData != null && currentRunningModelData.Count > 0)
+                    {
+                        int scannedQty = currentRunningModelData.First().ScannedQuantity;
+                        if (!scannedQty.Equals(0))
+                        {
+                            MivinDataBaseAccess.DeleteScannedPumpDetails(currentRunningModelData.First());
+                        }
+                        LoadRunningShiftStatus();
+                    }
+                }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //MessageBox.Show(ex.Message, "Error!!", MessageBoxButton.OK, MessageBoxImage.Error);
+                Logger.WriteDebugLog(ex.Message);
             }
             finally
             {
@@ -358,7 +374,7 @@ namespace PackingModule_Rexroth.Mivin
                             dlgError.ShowDialog();
                             return;
                         }
-                        if (!MivinDataBaseAccess.ValidatePumpSerialNumber(currentRunningModelData.First().ScheduleDate, scannedPumpData.PumpModel, scannedPumpData.PumpSerialNum))
+                        if (!MivinDataBaseAccess.ValidatePumpSerialNumber(scannedPumpData.PumpModel, scannedPumpData.PumpSerialNum))
                         {
                             DialogBox dlgError = new DialogBox("Error!!", "Duplicate serial number. This serial number is already scanned for running model.", true);
                             dlgError.Owner = Window.GetWindow(this);

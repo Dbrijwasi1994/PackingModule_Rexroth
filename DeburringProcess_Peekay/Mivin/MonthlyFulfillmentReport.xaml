@@ -47,7 +47,7 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Path=Type}" Header="Type" IsReadOnly="True" MinWidth="90" MaxWidth="200" />
 
-                    <DataGridTextColumn Binding="{Binding Path=Customer}" Header="Customer" IsReadOnly="False" MinWidth="90" MaxWidth="400" />
+                    <DataGridTextColumn Binding="{Binding Path=Customer}" Header="Customer" IsReadOnly="False" MinWidth="100" MaxWidth="400" />
 
                     <DataGridTextColumn Binding="{Binding Path=PumpPartNumber}" Header="Pump Part Number" IsReadOnly="False" Width="120" />
 
@@ -59,25 +59,25 @@
 
                     <DataGridTextColumn Binding="{Binding Path=ActualDispatch}" Header="Actual Dispatch" IsReadOnly="False" Width="100" />
 
-                    <DataGridTextColumn Binding="{Binding Path=CW1}" Header="CW1" IsReadOnly="False" MinWidth="70" MaxWidth="200" />
+                    <DataGridTextColumn Binding="{Binding Path=CW1}" Header="Week 1" IsReadOnly="False" MinWidth="70" MaxWidth="200" />
 
-                    <DataGridTextColumn Binding="{Binding Path=CW1Actual}" Header="CW1 Actual" IsReadOnly="False" Width="80" />
-                    
-                    <DataGridTextColumn Binding="{Binding Path=CW2}" Header="CW2" IsReadOnly="False" MinWidth="70" MaxWidth="200" />
+                    <DataGridTextColumn Binding="{Binding Path=CW1Actual}" Header="Week 1 Actual" IsReadOnly="False" Width="80" />
 
-                    <DataGridTextColumn Binding="{Binding Path=CW2Actual}" Header="CW2 Actual" IsReadOnly="False" Width="80" />
+                    <DataGridTextColumn Binding="{Binding Path=CW2}" Header="Week 2" IsReadOnly="False" MinWidth="70" MaxWidth="200" />
 
-                    <DataGridTextColumn Binding="{Binding Path=CW3}" Header="CW3" IsReadOnly="False" MinWidth="70" MaxWidth="200" />
+                    <DataGridTextColumn Binding="{Binding Path=CW2Actual}" Header="Week 2 Actual" IsReadOnly="False" Width="80" />
 
-                    <DataGridTextColumn Binding="{Binding Path=CW3Actual}" Header="CW3 Actual" IsReadOnly="False" Width="80" />
-                    
-                    <DataGridTextColumn Binding="{Binding Path=CW4}" Header="CW4" IsReadOnly="False" MinWidth="70" MaxWidth="200" />
+                    <DataGridTextColumn Binding="{Binding Path=CW3}" Header="Week 3" IsReadOnly="False" MinWidth="70" MaxWidth="200" />
 
-                    <DataGridTextColumn Binding="{Binding Path=CW4Actual}" Header="CW4 Actual" IsReadOnly="False" Width="80" />
+                    <DataGridTextColumn Binding="{Binding Path=CW3Actual}" Header="Week 3 Actual" IsReadOnly="False" Width="80" />
 
-                    <DataGridTextColumn Binding="{Binding Path=CW5}" Header="CW5" IsReadOnly="False" MinWidth="70" MaxWidth="200" />
+                    <DataGridTextColumn Binding="{Binding Path=CW4}" Header="Week 4" IsReadOnly="False" MinWidth="70" MaxWidth="200" />
 
-                    <DataGridTextColumn Binding="{Binding Path=CW5Actual}" Header="CW5 Actual" IsReadOnly="False" Width="80" />
+                    <DataGridTextColumn Binding="{Binding Path=CW4Actual}" Header="Week 4 Actual" IsReadOnly="False" Width="80" />
+
+                    <DataGridTextColumn Binding="{Binding Path=CW5}" Header="Week 5" IsReadOnly="False" MinWidth="70" MaxWidth="200" />
+
+                    <DataGridTextColumn Binding="{Binding Path=CW5Actual}" Header="Week 5 Actual" IsReadOnly="False" Width="80" />
                 </DataGrid.Columns>
             </DataGrid>
         </DockPanel>

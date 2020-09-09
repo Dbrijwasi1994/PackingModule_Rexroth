@@ -34,6 +34,7 @@ namespace PackingModule_Rexroth.Mivin
         ObservableCollection<MonthlyScheduleMasterEntity> scheduleMasterDataList = null;
         Dictionary<int, string> DaysList = new Dictionary<int, string>();
         List<string> PackagingTypeList = new List<string>();
+        new bool IsLoaded = false;
         public MonthlyScheduleMaster()
         {
             InitializeComponent();
@@ -74,6 +75,7 @@ namespace PackingModule_Rexroth.Mivin
                     DateTime SelectedDate = Convert.ToDateTime("01-" + cmbMonth.SelectedValue.ToString() + "-" + cmbYear.SelectedValue.ToString());
                     BindScheduleMasterData(SelectedDate);
                 }
+                IsLoaded = true;
             }
             catch (Exception ex)
             {
@@ -88,7 +90,7 @@ namespace PackingModule_Rexroth.Mivin
             try
             {
                 Month = Convert.ToDateTime("01-01-" + cmbYear.SelectedValue);
-                for (int i = 0; i <= 12; i++)
+                for (int i = 0; i < 12; i++)
                 {
                     MonthEntity Entity = new MonthEntity();
                     Entity.MonthName = Month.ToString("MMM");
@@ -761,9 +763,10 @@ namespace PackingModule_Rexroth.Mivin
             }
         }
 
-        private void cmbYear_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void cmbMonth_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            BindMonths();
+            if (IsLoaded)
+                btnSearch_Click(null, null);
         }
 
         private void ScheduleMasterImportGrid_PreviewMouseDown(object sender, MouseButtonEventArgs e)

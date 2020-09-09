@@ -32,8 +32,8 @@
             <StackPanel x:Name="panelFilterHeader" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Stretch">
                 <Image Source="/Images/Assets/appbar.input.pen.down.png"/>
                 <TextBlock Text="Date : " Style="{StaticResource HeaderTextblockStyle}"/>
-                <ComboBox x:Name="cmbMonth" Width="100" Height="26" FontSize="15" Margin="10,0,0,0"/>
-                <ComboBox x:Name="cmbYear" Width="100" Height="26" FontSize="15" Margin="10,0,0,0" SelectionChanged="cmbYear_SelectionChanged"/>
+                <ComboBox x:Name="cmbMonth" Width="100" Height="26" FontSize="15" Margin="10,0,0,0" SelectionChanged="cmbMonth_SelectionChanged"/>
+                <ComboBox x:Name="cmbYear" Width="100" Height="26" FontSize="15" Margin="10,0,0,0"/>
                 <TextBox Name="txtPumpModelSearch" Style="{StaticResource MyWaterMarkStyle}" Width="200" Margin="10,0,0,0" Height="26" Tag="Enter Pump Part Number" FontSize="14" FontWeight="Bold" KeyDown="txtPumpModelSearch_KeyDown"/>
                 <Button x:Name="btnSearch" Margin="10,0,0,0" Height="26" ToolTip="Search" Focusable="False" Style="{x:Null}" Click="btnSearch_Click">
                     <Button.Content>

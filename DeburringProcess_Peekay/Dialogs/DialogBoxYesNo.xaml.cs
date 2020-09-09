@@ -30,6 +30,7 @@ namespace DeburringProcess_Peekay.Dialogs
             InitializeComponent();
             lblHeader.Content = headerMsg;
             lblAccTxt.Text = msg;
+            btnNo.Focus();
         }
 
         private void btnYes_Click(object sender, RoutedEventArgs e)
