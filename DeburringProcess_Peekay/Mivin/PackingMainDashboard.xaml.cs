@@ -408,12 +408,12 @@ namespace PackingModule_Rexroth.Mivin
                                     dlgConfirm.ShowDialog();
                                     if (Utility.YesNoAnswer)
                                     {
-                                        PrintPackedBoxDetails(currentRunningModelData.First());
+                                        PrintPackedBoxDetails(currentRunningModelData.First(), true);
                                     }
                                 }
                                 if ((bool)chkAutoPrint.IsChecked)
                                 {
-                                    PrintPackedBoxDetails(currentRunningModelData.First());
+                                    PrintPackedBoxDetails(currentRunningModelData.First(), true);
                                 }
                             }
                             if (TotalScannedQty.Equals(PackingTarget - 1))
@@ -532,12 +532,12 @@ namespace PackingModule_Rexroth.Mivin
                                     dlgConfirm.ShowDialog();
                                     if (Utility.YesNoAnswer)
                                     {
-                                        PrintPackedBoxDetails(currentRunningModelData.First());
+                                        PrintPackedBoxDetails(currentRunningModelData.First(), true);
                                     }
                                 }
                                 if ((bool)chkAutoPrint.IsChecked)
                                 {
-                                    PrintPackedBoxDetails(currentRunningModelData.First());
+                                    PrintPackedBoxDetails(currentRunningModelData.First(), true);
                                 }
                             }
                             if (TotalScannedQty.Equals(PackingTarget - 1))
@@ -766,7 +766,7 @@ namespace PackingModule_Rexroth.Mivin
                     }
                     finally
                     {
-                        if (File.Exists(DestPath)) File.Delete(DestPath);
+                        //if (File.Exists(DestPath)) File.Delete(DestPath);
                     }
                 }
             }
