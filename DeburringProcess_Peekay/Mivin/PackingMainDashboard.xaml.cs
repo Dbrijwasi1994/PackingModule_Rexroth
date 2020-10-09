@@ -38,6 +38,7 @@ namespace PackingModule_Rexroth.Mivin
     /// </summary>
     public partial class PackingMainDashboard : UserControl
     {
+        int ScanResetTimeInterval = 300;
         string oldScanDataString = string.Empty;
         string currentStation = string.Empty;
         DateTime scanResetTime = DateTime.Now;
@@ -60,6 +61,8 @@ namespace PackingModule_Rexroth.Mivin
         {
             InitializeComponent();
             currentStation = ConfigurationManager.AppSettings["OperatorStation"].ToString();
+            if (ConfigurationManager.AppSettings["ScanResetTimeInterval"] != null)
+                ScanResetTimeInterval = Convert.ToInt32(ConfigurationManager.AppSettings["ScanResetTimeInterval"]);
         }
 
         private void PackingDashboard_Control_Loaded(object sender, RoutedEventArgs e)
@@ -128,7 +131,7 @@ namespace PackingModule_Rexroth.Mivin
                     {
                         RunningModelDetailsGrid.ItemsSource = runningModelDetails;
                         cmbPumpModelDetails.SelectedValue = runningModelDetails.First().RunningPumpModel;
-                        scanResetTime = DateTime.Now.AddMinutes(5);
+                        scanResetTime = DateTime.Now.AddSeconds(ScanResetTimeInterval);
                     }
                     else
                     {
@@ -247,7 +250,7 @@ namespace PackingModule_Rexroth.Mivin
                     scanDataString = GetString(scanDataArray).Trim(char.MinValue).Trim();
                     if (!string.IsNullOrEmpty(scanDataString.Trim()))
                     {
-                        scanResetTime = DateTime.Now.AddMinutes(5);
+                        scanResetTime = DateTime.Now.AddSeconds(ScanResetTimeInterval);
                         if (scanDataString.Contains("-"))
                         {
                             string[] QrScanData = scanDataString.Split('-');
@@ -296,7 +299,7 @@ namespace PackingModule_Rexroth.Mivin
                         }
                     }
                 }
-                pumpScanTimer.IsEnabled = true;
+                if (!pumpScanTimer.IsEnabled) pumpScanTimer.IsEnabled = true;
                 if (scanResetTime <= DateTime.Now)
                 {
                     var currentRunningModelData = RunningModelDetailsGrid.ItemsSource as ObservableCollection<RunningModelStatusEntity>;
@@ -354,6 +357,10 @@ namespace PackingModule_Rexroth.Mivin
                     QtyPerBox = currentRunningModelData.First().QuantityPerBox;
                     ScannedQty = currentRunningModelData.First().ScannedQuantity;
                     TotalScannedQty = currentRunningModelData.First().TotalScannedQuantity;
+                    if(QtyPerBox.Equals(ScannedQty))
+                    {
+                        MivinDataBaseAccess.UpdateScannedPumpDetails(currentRunningModelData.First().StationID, QtyPerBox, ScannedQty);
+                    }
                     PumpDetails pumpDetails = new PumpDetails();
                     pumpDetails.Owner = Window.GetWindow(this);
                     pumpDetails.ShowDialog();
@@ -381,13 +388,13 @@ namespace PackingModule_Rexroth.Mivin
                             dlgError.ShowDialog();
                             return;
                         }
-                        if (ScannedQty < QtyPerBox - 1)
+                        if (ScannedQty < QtyPerBox)
                         {
                             IsPumpScanned = MivinDataBaseAccess.UpdateScannedPumpDetails(currentRunningModelData.First(), 1, LoginPage.LoginUserName, 0, scannedPumpData.PumpSerialNum, "");
                         }
-                        if (ScannedQty.Equals(QtyPerBox - 1))
+                        if (ScannedQty.Equals(QtyPerBox))
                         {
-                            IsPumpScanned = MivinDataBaseAccess.UpdateScannedPumpDetails(currentRunningModelData.First(), 1, LoginPage.LoginUserName, 1, scannedPumpData.PumpSerialNum, "");
+                            IsPumpScanned = MivinDataBaseAccess.UpdateScannedPumpDetails(currentRunningModelData.First(), 1, LoginPage.LoginUserName, 0, scannedPumpData.PumpSerialNum, "");
                         }
 
                         if (IsPumpScanned)
@@ -476,6 +483,10 @@ namespace PackingModule_Rexroth.Mivin
                     QtyPerBox = currentRunningModelData.First().QuantityPerBox;
                     ScannedQty = currentRunningModelData.First().ScannedQuantity;
                     TotalScannedQty = currentRunningModelData.First().TotalScannedQuantity;
+                    if (QtyPerBox.Equals(ScannedQty))
+                    {
+                        MivinDataBaseAccess.UpdateScannedPumpDetails(currentRunningModelData.First().StationID, QtyPerBox, ScannedQty);
+                    }
                     if (string.IsNullOrEmpty(scannedPumpData.PumpModel) || string.IsNullOrEmpty(scannedPumpData.PumpSerialNum))
                     {
                         DialogBox dlgError = new DialogBox("Error!!", "Wrong QR code scanned. No data in QR code.", true);
@@ -501,13 +512,13 @@ namespace PackingModule_Rexroth.Mivin
                             //notifier.ShowError("Duplicate serial number. This serial number is already scanned for running model.");
                             return;
                         }
-                        if (ScannedQty < QtyPerBox - 1)
+                        if (ScannedQty < QtyPerBox)
                         {
                             IsPumpScanned = MivinDataBaseAccess.UpdateScannedPumpDetails(currentRunningModelData.First(), 1, LoginPage.LoginUserName, 0, scannedPumpData.PumpSerialNum, "");
                         }
-                        if (ScannedQty.Equals(QtyPerBox - 1))
+                        if (ScannedQty.Equals(QtyPerBox))
                         {
-                            IsPumpScanned = MivinDataBaseAccess.UpdateScannedPumpDetails(currentRunningModelData.First(), 1, LoginPage.LoginUserName, 1, scannedPumpData.PumpSerialNum, "");
+                            IsPumpScanned = MivinDataBaseAccess.UpdateScannedPumpDetails(currentRunningModelData.First(), 1, LoginPage.LoginUserName, 0, scannedPumpData.PumpSerialNum, "");
                         }
 
                         if (IsPumpScanned)
@@ -647,17 +658,14 @@ namespace PackingModule_Rexroth.Mivin
 
         private void btnForceClose_Click(object sender, RoutedEventArgs e)
         {
-            int PackingTarget = 0;
-            bool IsSuccessfullyClosed = false;
             string PackagingType = string.Empty;
             try
             {
-                var currentRunningModelData = RunningModelDetailsGrid.ItemsSource as ObservableCollection<RunningModelStatusEntity>;
-                if (currentRunningModelData != null && currentRunningModelData.Count > 0)
+                if (RunningModelDetailsGrid.ItemsSource is ObservableCollection<RunningModelStatusEntity> currentRunningModelData && currentRunningModelData.Count > 0)
                 {
                     if (currentRunningModelData.First().WorkOrderStatus.Equals("In Progress", StringComparison.OrdinalIgnoreCase))
                     {
-                        PackingTarget = GetPackingTargetForWorkOrder(currentRunningModelData.First());
+                        int PackingTarget = GetPackingTargetForWorkOrder(currentRunningModelData.First());
                         DialogBoxYesNo dialogBoxYesNo = new DialogBoxYesNo("Confirmation Dialog!!", "Are you sure you really want to force close this box ?");
                         dialogBoxYesNo.Owner = Window.GetWindow(this);
                         dialogBoxYesNo.ShowDialog();
@@ -665,7 +673,7 @@ namespace PackingModule_Rexroth.Mivin
                         {
                             if (currentRunningModelData.First().ScannedQuantity != 0)
                             {
-                                IsSuccessfullyClosed = MivinDataBaseAccess.UpdatePumpBoxForceCloseStatus(currentRunningModelData.First(), 1);
+                                bool IsSuccessfullyClosed = MivinDataBaseAccess.UpdatePumpBoxForceCloseStatus(currentRunningModelData.First(), 1);
                                 if (IsSuccessfullyClosed)
                                 {
                                     DialogBox dlgSuccess = new DialogBox("Success!!", "Box successfully closed.", false);
@@ -678,12 +686,12 @@ namespace PackingModule_Rexroth.Mivin
                                         dlgConfirm.ShowDialog();
                                         if (Utility.YesNoAnswer)
                                         {
-                                            PrintPackedBoxDetails(currentRunningModelData.First());
+                                            PrintPackedBoxDetails(currentRunningModelData.First(), true);
                                         }
                                     }
                                     else
                                     {
-                                        PrintPackedBoxDetails(currentRunningModelData.First());
+                                        PrintPackedBoxDetails(currentRunningModelData.First(), true);
                                     }
                                     LoadRunningShiftStatus();
                                 }
@@ -722,7 +730,7 @@ namespace PackingModule_Rexroth.Mivin
             }
         }
 
-        private void PrintPackedBoxDetails(RunningModelStatusEntity runningModelStatusEntity)
+        private void PrintPackedBoxDetails(RunningModelStatusEntity runningModelStatusEntity, bool auto_print = false)
         {
             bool IsPrinterValid = false;
             string DestPath = string.Empty;
@@ -731,7 +739,7 @@ namespace PackingModule_Rexroth.Mivin
                 string PrinterServer = ConfigurationManager.AppSettings["PrinterServer"].ToString();
                 string PrinterName = ConfigurationManager.AppSettings["PrinterName"].ToString();
                 string templateFileName = System.IO.Path.Combine(Utility.appPath, "Mivin", "PrintPRNFile", "Rexroth.prn");
-                DestPath = GenerateDestinationPrintFile(runningModelStatusEntity, templateFileName);
+                DestPath = GenerateDestinationPrintFile(runningModelStatusEntity, templateFileName, auto_print);
                 if (!string.IsNullOrEmpty(DestPath) && File.Exists(DestPath))
                 {
                     try
@@ -769,7 +777,7 @@ namespace PackingModule_Rexroth.Mivin
             }
         }
 
-        public static string GenerateDestinationPrintFile(RunningModelStatusEntity runningModelData, string sourcePath)
+        public static string GenerateDestinationPrintFile(RunningModelStatusEntity runningModelData, string sourcePath, bool autoprint = false)
         {
             string DestFileName = string.Empty;
             string destFolder = string.Empty;
@@ -784,7 +792,7 @@ namespace PackingModule_Rexroth.Mivin
                 for (int i = 0; i < fileContent.Length; i++)
                 {
                     if (fileContent[i].Contains("803402048A")) fileContent[i] = fileContent[i].Replace("803402048A", runningModelData.CustomerModel);
-                    else if (fileContent[i].Contains("06Nos")) fileContent[i] = fileContent[i].Replace("06Nos", runningModelData.QuantityPerBox + "Nos.");
+                    else if (fileContent[i].Contains("06Nos")) fileContent[i] = fileContent[i].Replace("06Nos", (autoprint ? (runningModelData.ScannedQuantity + 1) : runningModelData.ScannedQuantity) + "Nos.");
                     else if (fileContent[i].Contains("AG")) fileContent[i] = fileContent[i].Replace("AG", runningModelData.PackagingType);
                     else if (fileContent[i].Contains("R983035458")) fileContent[i] = fileContent[i].Replace("R983035458", runningModelData.RunningPumpModel);
                     else if (fileContent[i].Contains("02-11-20")) fileContent[i] = fileContent[i].Replace("02-11-20", DateTime.Now.ToString("dd-MM-yy"));

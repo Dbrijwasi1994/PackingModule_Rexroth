@@ -653,7 +653,7 @@ namespace DeburringProcess_Peekay.DB_Connection
         {
             isUpdated = false;
             SqlConnection sqlConn = null;
-            string query = @"if exists(select * from PumpMasterData where PumpModel = @PumpModel and PackagingType = @PackagingType) begin update PumpMasterData set CustomerModel = @CustomerModel, CustomerName = @CustomerName, SalesUnit = @SalesUnit, PackagingType = @PackagingType, PackingBoxNumber = @PackingBoxNumber, PerBoxPumpQty = @PerBoxPumpQty, PumpType = @PumpType, BoxDestination = @BoxDestination where PumpModel = @PumpModel and PackagingType = @PackagingType end else begin insert into PumpMasterData(PumpModel, CustomerModel, CustomerName, SalesUnit, PackagingType, PackingBoxNumber, PerBoxPumpQty, PumpType, BoxDestination) values(@PumpModel, @CustomerModel, @CustomerName, @SalesUnit, @PackagingType, @PackingBoxNumber, @PerBoxPumpQty, @PumpType, @BoxDestination) end";
+            string query = @"if exists(select * from PumpMasterData where PumpModel = @PumpModel) begin update PumpMasterData set CustomerModel = @CustomerModel, CustomerName = @CustomerName, SalesUnit = @SalesUnit, PackagingType = @PackagingType, PackingBoxNumber = @PackingBoxNumber, PerBoxPumpQty = @PerBoxPumpQty, PumpType = @PumpType, BoxDestination = @BoxDestination where PumpModel = @PumpModel end else begin insert into PumpMasterData(PumpModel, CustomerModel, CustomerName, SalesUnit, PackagingType, PackingBoxNumber, PerBoxPumpQty, PumpType, BoxDestination) values(@PumpModel, @CustomerModel, @CustomerName, @SalesUnit, @PackagingType, @PackingBoxNumber, @PerBoxPumpQty, @PumpType, @BoxDestination) end";
             try
             {
                 if (pumpInfoDataRow != null)
@@ -1473,6 +1473,31 @@ namespace DeburringProcess_Peekay.DB_Connection
                 if (conn != null) conn.Close();
             }
             return IsValidated;
+        }
+
+        internal static void UpdateScannedPumpDetails(string stationID, int qtyPerBox, int scannedQty)
+        {
+            SqlConnection conn = null;
+            string query = @"declare @idd as int select @idd=max(idd) from ScannedDetails where StationID=@StationID
+                   if @QtyPerBox = @ScannedQty begin Update ScannedDetails set ScannedOrForceCloseStatus=1 where idd=@idd and ScannedOrForceCloseStatus=0 end";
+            try
+            {
+                conn = ConnectionManager.GetConnection();
+                SqlCommand sqlCommand = new SqlCommand(query, conn);
+                sqlCommand.Parameters.AddWithValue("@StationID", stationID);
+                sqlCommand.Parameters.AddWithValue("@QtyPerBox", stationID);
+                sqlCommand.Parameters.AddWithValue("@ScannedQty", stationID);
+                sqlCommand.CommandType = CommandType.Text;
+                sqlCommand.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteErrorLog("Error while updating scanned pump details in method UpdatePumpScannedDetails - \n" + ex.ToString());
+            }
+            finally
+            {
+                if (conn != null) conn.Close();
+            }
         }
 
         internal static bool UpdatePumpScannedDetails(RunningModelStatusEntity currentRunningModelData, int scannedQty, string loginUserName, int scanStatus, string pumpSerialNum, string remarks)

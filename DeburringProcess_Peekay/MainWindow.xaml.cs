@@ -1,26 +1,12 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using DeburringProcess_Peekay.Models;
 using DeburringProcess_Peekay.Helpers;
 using System.Configuration;
-using DeburringProcess_Peekay.UserControls;
-using DeburringProcess_Peekay.PDFViewer;
-using System.Windows.Forms.Integration;
-using System.IO;
 using DeburringProcess_Peekay.Dialogs;
 using DeburringProcess_Peekay.DB_Connection;
 using DeburringProcess_Peekay.Mivin;
@@ -386,14 +372,14 @@ namespace DeburringProcess_Peekay
                 {
                     data = JsonConvert.DeserializeObject<QRVals>(msg);
                     _barcode.Clear();
-                    if (Utility.Process.Equals("dispatch area", StringComparison.OrdinalIgnoreCase))
-                    {
-                        DispatchProcessCtrl.RefreshData(data);
-                    }
-                    else
-                    {
-                        DeburringProcess.RefreshData(data);
-                    }
+                    //if (Utility.Process.Equals("dispatch area", StringComparison.OrdinalIgnoreCase))
+                    //{
+                    //    DispatchProcessCtrl.RefreshData(data);
+                    //}
+                    //else
+                    //{
+                    //    DeburringProcess.RefreshData(data);
+                    //}
                 }
                 catch (Exception ex)
                 {

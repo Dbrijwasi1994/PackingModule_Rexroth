@@ -194,29 +194,8 @@
     <Compile Include="Models\ScheduleMasterEntity.cs" />
     <Compile Include="Models\ShiftDetailsEntity.cs" />
     <Compile Include="Models\ShiftTargetMasterEntity.cs" />
-    <Compile Include="ProductionData.xaml.cs">
-      <DependentUpon>ProductionData.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="DispatchProcessCtrl.xaml.cs">
-      <DependentUpon>DispatchProcessCtrl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="PDFViewer\PdfViewer.xaml.cs">
       <DependentUpon>PdfViewer.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\DownTime.xaml.cs">
-      <DependentUpon>DownTime.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\DownTimeSummary.xaml.cs">
-      <DependentUpon>DownTimeSummary.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\InspectionRpt.xaml.cs">
-      <DependentUpon>InspectionRpt.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\QRContent.xaml.cs">
-      <DependentUpon>QRContent.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\Settings.xaml.cs">
-      <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>
     <Compile Include="WebView.xaml.cs">
       <DependentUpon>WebView.xaml</DependentUpon>
@@ -285,18 +264,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ProductionData.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="DispatchProcessCtrl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="DeburringProcess.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Dialogs\ApproveMaterial.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -310,10 +277,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Dialogs\LoginDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="InspectionProcess.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -331,9 +294,6 @@
     </Compile>
     <Compile Include="DB Connection\ConnectionManager.cs" />
     <Compile Include="DB Connection\DatabaseAccess.cs" />
-    <Compile Include="DeburringProcess.xaml.cs">
-      <DependentUpon>DeburringProcess.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Dialogs\ApproveMaterial.xaml.cs">
       <DependentUpon>ApproveMaterial.xaml</DependentUpon>
     </Compile>
@@ -348,9 +308,6 @@
     </Compile>
     <Compile Include="Helpers\Logger.cs" />
     <Compile Include="Helpers\Utility.cs" />
-    <Compile Include="InspectionProcess.xaml.cs">
-      <DependentUpon>InspectionProcess.xaml</DependentUpon>
-    </Compile>
     <Compile Include="LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
@@ -385,26 +342,6 @@
     <Page Include="Themes\Theme.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UserControls\DownTime.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControls\DownTimeSummary.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControls\InspectionRpt.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControls\QRContent.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControls\Settings.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="WebView.xaml">
       <SubType>Designer</SubType>

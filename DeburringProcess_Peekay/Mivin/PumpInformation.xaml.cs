@@ -83,7 +83,7 @@ namespace DeburringProcess_Peekay.Mivin
                 {
                     PumpInfoGrid.ItemsSource = PumpInformationData;
                     PumpInfoGrid.Columns[0].IsReadOnly = true;
-                    PumpInfoGrid.Columns[4].IsReadOnly = true;
+                    PumpInfoGrid.Columns[4].IsReadOnly = false;
                 }
                 else
                 {

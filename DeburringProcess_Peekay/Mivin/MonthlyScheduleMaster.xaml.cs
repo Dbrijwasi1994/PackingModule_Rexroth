@@ -196,6 +196,7 @@ namespace PackingModule_Rexroth.Mivin
         {
             if (!string.IsNullOrEmpty(FileName))
             {
+                int lineNumber = 0;
                 try
                 {
                     FileInfo fileinfo = new FileInfo(FileName);
@@ -225,7 +226,7 @@ namespace PackingModule_Rexroth.Mivin
                             {
                                 List<MonthlyScheduleMasterEntity> ScheduleMasterImportData = new List<MonthlyScheduleMasterEntity>();
                                 ExcelPackage Excelpck = new ExcelPackage(fileinfo);
-                                ExcelWorksheet worksheet = Excelpck.Workbook.Worksheets[21];
+                                ExcelWorksheet worksheet = Excelpck.Workbook.Worksheets[1];
                                 DataTable dt = new DataTable();
                                 string Monthyear = worksheet.Cells["C3"].Text.ToString();
                                 DateTime MonthYear = DateTime.Now;
@@ -233,6 +234,7 @@ namespace PackingModule_Rexroth.Mivin
                                 DateTime Dateforimport = MonthYear;
                                 for (int i = 6; i <= worksheet.Dimension.End.Row; i++)
                                 {
+                                    lineNumber = i;
                                     if (worksheet.Cells[i, 1].Value != null && !(string.IsNullOrEmpty(worksheet.Cells[i, 1].Value.ToString()) || worksheet.Cells[i, 1].Value.ToString().Equals("Total", StringComparison.OrdinalIgnoreCase)))
                                     {
                                         for (int j = 10; j <= worksheet.Dimension.End.Column; j++)
@@ -241,6 +243,7 @@ namespace PackingModule_Rexroth.Mivin
                                             if (worksheet.Cells[i, 1].Value != null)
                                             {
                                                 ImportEntity.PackagingType = worksheet.Cells[i, 1].Value.ToString();
+                                                if (!PackagingTypeList.Any(x => x.Equals(ImportEntity.PackagingType))) break;
                                             }
                                             if (worksheet.Cells[i, 2].Value != null)
                                             {
@@ -353,7 +356,7 @@ namespace PackingModule_Rexroth.Mivin
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message, "Error!!", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show($"Error : {ex.Message} at line : {lineNumber}", "Error!!", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }
