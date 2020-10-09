@@ -686,12 +686,12 @@ namespace PackingModule_Rexroth.Mivin
                                         dlgConfirm.ShowDialog();
                                         if (Utility.YesNoAnswer)
                                         {
-                                            PrintPackedBoxDetails(currentRunningModelData.First(), true);
+                                            PrintPackedBoxDetails(currentRunningModelData.First(), false);
                                         }
                                     }
                                     else
                                     {
-                                        PrintPackedBoxDetails(currentRunningModelData.First(), true);
+                                        PrintPackedBoxDetails(currentRunningModelData.First(), false);
                                     }
                                     LoadRunningShiftStatus();
                                 }
